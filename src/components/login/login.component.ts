@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
+import { UsersService } from '../../services/users.services';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent {
   current_year = new Date().getFullYear();
 
   constructor(
+    private userService: UsersService,
     private fb: FormBuilder,
     private http: HttpClient,
     private router: Router
@@ -31,24 +33,18 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       this.isLoading = true;
-      this.http.post('http://localhost:5000/api/users/login', this.loginForm.value)
-        .subscribe({
-          next: (res: any) => {
-            this.isLoading = false;
+      this.userService.login(this.loginForm.value).subscribe((data: any) => {
+        if(data.success){
+          this.isLoading = false;
+          localStorage.setItem('accessToken', data.data.accessToken);
+            localStorage.setItem('refreshToken', data.data.refreshToken);
+            localStorage.setItem('user', JSON.stringify(data.data.user));
 
-            // Store tokens in localStorage
-            localStorage.setItem('accessToken', res.data.accessToken);
-            localStorage.setItem('refreshToken', res.data.refreshToken);
-            localStorage.setItem('user', JSON.stringify(res.data.user));
-
-            this.router.navigate(['/']); // redirect to home/dashboard
-          },
-          error: () => {
-            this.isLoading = false;
-            this.loginError = 'Invalid email or password';
-            this.loginForm.reset();
-          }
-        });
+            this.router.navigate(['/main-page']);
+        } else {
+          this.isLoading = false;
+        }
+      })
     }
   }
 
