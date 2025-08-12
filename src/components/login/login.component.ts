@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
 import { UsersService } from '../../services/users.services';
+import { SwalService } from '../../shared/Swal/swal.service';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +25,8 @@ export class LoginComponent {
 
   constructor(
     private userService: UsersService,
+    private swalService: SwalService,
     private fb: FormBuilder,
-    private http: HttpClient,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -31,20 +36,24 @@ export class LoginComponent {
   }
 
   onSubmit() {
+    this.isLoading = true;
     if (this.loginForm.valid) {
-      this.isLoading = true;
       this.userService.login(this.loginForm.value).subscribe((data: any) => {
-        if(data.success){
+        if (data.success) {
           this.isLoading = false;
           localStorage.setItem('accessToken', data.data.accessToken);
-            localStorage.setItem('refreshToken', data.data.refreshToken);
-            localStorage.setItem('user', JSON.stringify(data.data.user));
+          localStorage.setItem('refreshToken', data.data.refreshToken);
+          localStorage.setItem('user', JSON.stringify(data.data.user));
 
-            this.router.navigate(['/main-page']);
+          this.router.navigate(['/main-page']);
         } else {
           this.isLoading = false;
+          this.swalService.showError('Something went wrong, please try again!');
         }
-      })
+      });
+    }else {
+        this.isLoading = false;
+        this.swalService.showWarning('Please check your crendentials!');
     }
   }
 

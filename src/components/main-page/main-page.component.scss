@@ -1,0 +1,4 @@
+/* Prevent layout shift when mobile menu opens */
+body {
+  overflow-x: hidden;
+}
