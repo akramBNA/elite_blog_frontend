@@ -78,13 +78,8 @@ export class UsersListComponent implements OnInit {
     this.isEmpty = false;
     this.isLoading = true;
     const keyword = this.keywordControl.value || '';
-    console.log("his.keywordControl.value ====>  ", this.keywordControl.value, " -- type: ", typeof this.keywordControl.value);
     
-    console.log(" params ===> ", keyword, " - lim: ", this.limit, " - page: ", this.page);
-    
-    this.usersService.getAllActiveUsers(this.limit, this.page, keyword).subscribe((data: any) => {
-      console.log(" data ?? ", data);
-      
+    this.usersService.getAllActiveUsers(this.limit, this.page, keyword).subscribe((data: any) => {      
       if(data.success){
         this.isLoading = false;
         this.users = data.data;
