@@ -10,7 +10,10 @@ import { UsersListComponent } from '../components/users-list/users-list.componen
 export const routes: Routes = [
     { path: '', component: LoginComponent },
     { path: 'access-denied', component: AccessDeniedComponent },
+    // { path: '**', redirectTo: 'access-denied' },
     { path: 'sign-up', component: SignupComponent},
-    { path: 'main-page', component: MainPageComponent, canActivate: [AuthGuard]},
-    { path: 'users-list', component: UsersListComponent, canActivate: [AuthGuard]}, //
+    { path: 'main-page', component: MainPageComponent, canActivate: [AuthGuard], canActivateChild:[AuthGuard], children: [
+        { path: 'users-list', component: UsersListComponent}, // , canActivate: [AuthGuard]
+    ]},
+
 ];

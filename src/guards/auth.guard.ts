@@ -64,4 +64,8 @@ export class AuthGuard implements CanActivate {
 
     return of(this.router.createUrlTree(['/access-denied']));
   }
+
+  canActivateChild(): Observable<boolean | UrlTree> {
+    return this.canActivate();
+  }
 }

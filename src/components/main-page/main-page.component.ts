@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UsersService } from '../../services/users.services';
 import { SwalService } from '../../shared/Swal/swal.service'
+// import { RouterOutlet } from "../../../node_modules/@angular/router/router_module.d-Bx9ArA6K";
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, RouterOutlet],
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss'],
 })
