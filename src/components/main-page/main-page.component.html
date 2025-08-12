@@ -4,8 +4,8 @@
     <div class="text-lg font-bold">Elite Blog</div>
 
     <div class="hidden md:flex space-x-6">
-      <a routerLink="/main-page" class="hover:text-gray-300">Main Content</a>
-      <a routerLink="/users" class="hover:text-gray-300">Users List</a>
+      <a routerLink="/main-page" class="hover:text-gray-300">Content Feed</a>
+      <a routerLink="/users-list" class="hover:text-gray-300">Users List</a>
       <a routerLink="/profile" class="hover:text-gray-300">Profile</a>
     </div>
 
@@ -25,8 +25,8 @@
   </div>
 
   <div *ngIf="isMenuOpen" class="md:hidden mt-3 space-y-2">
-    <a routerLink="/main-page" class="block hover:text-gray-300">Main Content</a>
-    <a routerLink="/users" class="block hover:text-gray-300">Users List</a>
+    <a routerLink="/main-page" class="block hover:text-gray-300">Content Feed</a>
+    <a routerLink="/users-list" class="block hover:text-gray-300">Users List</a>
     <a routerLink="/profile" class="block hover:text-gray-300">Profile</a>
     <button class="bg-red-500 px-3 py-1 rounded hover:bg-red-600" (click)="logout()">Logout</button>
   </div>

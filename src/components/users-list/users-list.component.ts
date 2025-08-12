@@ -31,7 +31,7 @@ interface UserStats {
   selector: 'app-users-list',
   imports: [CommonModule, LoadingSpinnerComponent, MatInputModule, MatIconModule, MatPaginatorModule, ReactiveFormsModule],
   templateUrl: './users-list.component.html',
-  styleUrls: ['./users-list.component.css']
+  styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent implements OnInit {
   stats: UserStats = {
