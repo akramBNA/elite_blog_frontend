@@ -34,4 +34,16 @@ export class UsersService {
       return this.http.post<RefreshResponse>(`${this.base_url}/users/refreshToken`, {refreshToken});
     };
 
+    getAllActiveUsers(page: number, limit: number, keyword: string ): Observable<any> {
+      const params: any = {
+        page: page.toString(),
+        limit: limit.toString(),
+      };
+      if (keyword.trim()) {
+        params.keyword = keyword.trim();
+      };
+
+      return this.http.get<any>(`${this.base_url}/users/getAllActiveUsers`, { params });
+    };
+
 }
