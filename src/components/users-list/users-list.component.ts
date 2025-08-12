@@ -8,8 +8,9 @@ import { MatInputModule } from "@angular/material/input";
 import { MatIconModule } from "@angular/material/icon";
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-// import { EditRoleDialogComponent } from './edit-roles-dialog/edit-roles-dialog.component';
+import { EditRoleDialogComponent } from './edit-roles-dialog/edit-roles-dialog.component';
 import { RolesService } from '../../services/roles.services';
+import { SwalService } from '../../shared/Swal/swal.service';
 
 interface User {
   _id: string;
@@ -47,6 +48,7 @@ export class UsersListComponent implements OnInit {
   users: User[] = [];
   isLoading = false;
   isEmpty = false;
+  roles_data:any [] =[];
 
   limit = 20;
   page = 1;
@@ -59,6 +61,7 @@ export class UsersListComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private rolesService: RolesService,
+    private swalService: SwalService,
     private dialog: MatDialog
   ) {}
 
@@ -109,40 +112,41 @@ export class UsersListComponent implements OnInit {
   }
 
   editRole(userId: string) {
-    // const user = this.users.find(u => u._id === userId);
-    // if (!user) return;
+    const user = this.users.find(u => u._id === userId);
+    if (!user) return;
 
-    // this.rolesService.getAllRoles().subscribe((rolesData: any) => {
-    //   if (!rolesData.success) {
-    //     // Handle error (optional)
-    //     return;
-    //   }
+    this.rolesService.getAllRoles().subscribe((data: any) => {
+      if (!data.success) {
+        this.swalService.showError('Failed to get roles, try again!').then(()=>{
+          return;
+        });
+      }
 
-    //   const dialogRef = this.dialog.open(EditRoleDialogComponent, {
-    //     width: '400px',
-    //     data: {
-    //       userId: user._id,
-    //       firstName: user.firstName,
-    //       lastName: user.lastName,
-    //       currentRoleId: user.role,  // assuming role contains _id or you might need to adapt
-    //       roles: rolesData.data
-    //     }
-    //   });
+      const dialogRef = this.dialog.open(EditRoleDialogComponent, {
+        width: '400px',
+        data: {
+          userId: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          currentRoleId: user.role,
+          roles: data.data
+        }
+      });
 
-    //   dialogRef.afterClosed().subscribe(result => {
-    //     if (result) {  // result is the selected role id from dialog
-    //       this.usersService.updateRole(user._id, result).subscribe((res: any) => {
-    //         if (res.success) {
-    //           this.swalService.showSuccess('User role successfully updated!').then(() => {
-    //             this.loadUsers();  // refresh list
-    //           });
-    //         } else {
-    //           this.swalService.showError('Failed to update user role, please try again.');
-    //         }
-    //       });
-    //     }
-    //   });
-    // });
+      dialogRef.afterClosed().subscribe(result => {        
+        if (result) {
+          this.rolesService.updateRole(user._id, result).subscribe((res: any) => {
+            if (res.success) {
+              this.swalService.showSuccess('User role successfully updated!').then(() => {
+                this.loadUsers();
+              });
+            } else {
+              this.swalService.showError('Failed to update user role, please try again.');
+            }
+          });
+        }
+      });
+    });
   }
 
 }
