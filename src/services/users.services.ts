@@ -46,4 +46,8 @@ export class UsersService {
       return this.http.get<any>(`${this.base_url}/users/getAllActiveUsers`, { params });
     };
 
+    getUserStats(): Observable<any> {
+      return this.http.get<any>(`${this.base_url}/users/getUserStats`);
+    };
+
 }
