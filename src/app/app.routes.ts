@@ -2,9 +2,11 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from '../components/login/login.component';
 import { SignupComponent } from '../components/signup/signup.component';
 import { MainPageComponent } from '../components/main-page/main-page.component';
+import { AccessDeniedComponent } from '../components/access-denied/access-denied.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
+    { path: 'access-denied', component: AccessDeniedComponent },
     { path: 'sign-up', component: SignupComponent},
     { path: 'main-page', component: MainPageComponent}
 ];
