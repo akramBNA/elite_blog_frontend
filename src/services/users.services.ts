@@ -12,4 +12,8 @@ export class UsersService {
     login(user_data:any): Observable<any> {
       return this.http.post<any>(`${this.base_url}/users/login`, user_data);
     };
+
+    signup(user_data:any): Observable<any> {
+      return this.http.post<any>(`${this.base_url}/users/signUp`, user_data);
+    };
 }

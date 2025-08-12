@@ -77,6 +77,6 @@ export class SignupComponent {
   }
 
   goBack(): void {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 }
