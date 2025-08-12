@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CanActivate, Router, UrlTree } from '@angular/router';
 import { UsersService } from '../services/users.services';
 import { Observable, of } from 'rxjs';
@@ -13,7 +14,11 @@ interface JwtPayload {
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private usersService: UsersService, private router: Router) {}
+  constructor(
+    private usersService: UsersService,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   private isTokenExpired(token: string): boolean {
     try {
@@ -28,6 +33,10 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate(): Observable<boolean | UrlTree> {
+    if (!isPlatformBrowser(this.platformId)) {
+      return of(this.router.createUrlTree(['/access-denied']));
+    }
+
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
 
