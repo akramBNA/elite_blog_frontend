@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
 import { UsersService } from '../../services/users.services';
+import { SwalService } from '../../shared/Swal/swal.service';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +20,8 @@ export class LoginComponent {
 
   constructor(
     private userService: UsersService,
+    private swalService: SwalService,
     private fb: FormBuilder,
-    private http: HttpClient,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -43,6 +43,7 @@ export class LoginComponent {
             this.router.navigate(['/main-page']);
         } else {
           this.isLoading = false;
+          this.swalService.showError('failed to login please check your credentials and try again');
         }
       })
     }
