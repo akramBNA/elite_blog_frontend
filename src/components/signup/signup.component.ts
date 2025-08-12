@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
 import { SwalService } from '../../shared/Swal/swal.service';
+import { UsersService } from '../../services/users.services';
 
 @Component({
   selector: 'app-signup',
@@ -38,6 +39,7 @@ export class SignupComponent {
     private http: HttpClient,
     private router: Router,
     private swalService: SwalService,
+    private userService: UsersService
   ) {
     this.signupForm = this.fb.group({
       firstName: ['', [Validators.required]],
