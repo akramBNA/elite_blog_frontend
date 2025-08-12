@@ -4,7 +4,9 @@ import { SwalService } from '../../shared/Swal/swal.service';
 import { LoadingSpinnerComponent } from "../../shared/loading-spinner/loading-spinner.component";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatIconModule } from "@angular/material/icon";  // <-- Needed for ngModel
+import { MatIconModule } from "@angular/material/icon";
+import { CommentssService } from '../../services/comments.services';
+import { routes } from '../../app/app.routes';
 
 interface Post {
   _id: string;
@@ -33,7 +35,11 @@ export class FeedComponent implements OnInit {
 
   newComments: { [postId: string]: string } = {};
 
-  constructor(private postsService: PostsService, private swalService: SwalService) {}
+  constructor(
+    private postsService: PostsService, 
+    private swalService: SwalService,
+    private commentsService: CommentssService
+  ) {}
 
   ngOnInit() {
     this.loadPosts();
@@ -78,31 +84,39 @@ export class FeedComponent implements OnInit {
   }
 
   addComment(post: Post) {
+    this.isLoading = true;
     const content = this.newComments[post._id]?.trim();
     if (!content) return;
 
     const user = localStorage.getItem('user');
     if (!user) {
+      this.isLoading = false;
       this.swalService.showError('You must be logged in to comment');
       return;
     }
 
     const userId = JSON.parse(user)._id;
+    const comments_data = {
+      postId: post._id , 
+      userId: userId, 
+      content: content
+    };
 
-    // this.postsService.addCommentToPost(post._id, userId, content).subscribe({
-    //   next: (res) => {
-    //     if (res.success) {
-    //       // Append comment to post.comments locally
-    //       post.comments.push(res.data);
-    //       // Clear input
-    //       this.newComments[post._id] = '';
-    //     } else {
-    //       this.swalService.showError('Failed to add comment');
-    //     }
-    //   },
-    //   error: () => {
-    //     this.swalService.showError('Error adding comment');
-    //   }
-    // });
+    this.commentsService.createComment(comments_data).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.isLoading = false;
+          post.comments.push(res.data);
+          this.newComments[post._id] = '';
+        } else {
+          this.isLoading = false;
+          this.swalService.showError('Failed to add comment');
+        }
+      },
+      error: () => {
+        this.isLoading = false;
+        this.swalService.showError('Error adding comment');
+      }
+    });
   }
 }
