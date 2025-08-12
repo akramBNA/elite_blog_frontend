@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { UsersService } from '../../services/users.services';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, flatMap } from 'rxjs/operators';
 import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
 import { MatInputModule } from "@angular/material/input";
 import { MatIconModule } from "@angular/material/icon";
@@ -112,16 +112,20 @@ export class UsersListComponent implements OnInit {
   }
 
   editRole(userId: string) {
+    this.isLoading = true;
     const user = this.users.find(u => u._id === userId);
     if (!user) return;
 
     this.rolesService.getAllRoles().subscribe((data: any) => {
-      if (!data.success) {
+      if(data.success){
+        this.isLoading = false;
+      } else{
+        this.isLoading = false;
         this.swalService.showError('Failed to get roles, try again!').then(()=>{
           return;
         });
       }
-
+  
       const dialogRef = this.dialog.open(EditRoleDialogComponent, {
         width: '400px',
         data: {
@@ -133,14 +137,17 @@ export class UsersListComponent implements OnInit {
         }
       });
 
-      dialogRef.afterClosed().subscribe(result => {        
+      dialogRef.afterClosed().subscribe(result => {      
+        this.isLoading = true;  
         if (result) {
           this.rolesService.updateRole(user._id, result).subscribe((res: any) => {
             if (res.success) {
+              this.isLoading = false;
               this.swalService.showSuccess('User role successfully updated!').then(() => {
                 this.loadUsers();
               });
             } else {
+              this.isLoading = false;
               this.swalService.showError('Failed to update user role, please try again.');
             }
           });

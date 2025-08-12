@@ -3,6 +3,10 @@ import { PostsService } from '../../services/posts.services';
 import { SwalService } from '../../shared/Swal/swal.service';
 import { LoadingSpinnerComponent } from "../../shared/loading-spinner/loading-spinner.component";
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatIconModule } from "@angular/material/icon";
+import { CommentssService } from '../../services/comments.services';
+import { routes } from '../../app/app.routes';
 
 interface Post {
   _id: string;
@@ -20,7 +24,7 @@ interface Post {
   selector: 'app-feed',
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss'],
-  imports: [CommonModule ,LoadingSpinnerComponent]
+  imports: [CommonModule, LoadingSpinnerComponent, FormsModule, MatIconModule]
 })
 export class FeedComponent implements OnInit {
   posts: Post[] = [];
@@ -29,7 +33,13 @@ export class FeedComponent implements OnInit {
   totalPages: number = 1;
   isLoading: boolean = false;
 
-  constructor(private postsService: PostsService, private swalService: SwalService) {}
+  newComments: { [postId: string]: string } = {};
+
+  constructor(
+    private postsService: PostsService, 
+    private swalService: SwalService,
+    private commentsService: CommentssService
+  ) {}
 
   ngOnInit() {
     this.loadPosts();
@@ -67,5 +77,46 @@ export class FeedComponent implements OnInit {
     if (scrollTop + windowHeight > fullHeight - 100) {
       this.loadPosts();
     }
+  }
+
+  onEditPost(post: Post) {
+    this.swalService.showAlert(`Edit feature coming soon for post "${post.title}"`);
+  }
+
+  addComment(post: Post) {
+    this.isLoading = true;
+    const content = this.newComments[post._id]?.trim();
+    if (!content) return;
+
+    const user = localStorage.getItem('user');
+    if (!user) {
+      this.isLoading = false;
+      this.swalService.showError('You must be logged in to comment');
+      return;
+    }
+
+    const userId = JSON.parse(user)._id;
+    const comments_data = {
+      postId: post._id , 
+      userId: userId, 
+      content: content
+    };
+
+    this.commentsService.createComment(comments_data).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.isLoading = false;
+          post.comments.push(res.data);
+          this.newComments[post._id] = '';
+        } else {
+          this.isLoading = false;
+          this.swalService.showError('Failed to add comment');
+        }
+      },
+      error: () => {
+        this.isLoading = false;
+        this.swalService.showError('Error adding comment');
+      }
+    });
   }
 }

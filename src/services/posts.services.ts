@@ -3,12 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environments';
 
-// interface RefreshResponse {
-//   success: boolean;
-//   accessToken?: string;
-//   message?: string;
-// }
-
 @Injectable({ providedIn: 'root' })
 export class PostsService {
   constructor(private http: HttpClient) {}

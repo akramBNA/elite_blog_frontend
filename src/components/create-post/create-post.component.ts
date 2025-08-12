@@ -51,23 +51,16 @@ export class CreatePostComponent implements OnInit {
     const postData = {
       title: formValue.title.trim(),
       content: formValue.content.trim(),
-      tags: formValue.tags
-        ? formValue.tags
-            .split(',')
-            .map((tag: string) => tag.trim())
-            .filter((tag: string) => tag.length > 0)
-        : [],
+      tags: formValue.tags ? formValue.tags.split(',').map((tag: string) => tag.trim()).filter((tag: string) => tag.length > 0) : [],
       image: formValue.image.trim(),
       author: this.authorId,
     };
-
-    console.log('Post to submit:', postData);
 
     this.postService.createPost(postData).subscribe((data:any)=>{
       if(data.success){
         this.isLoading = false;
         this.swalService.showSuccess('Your post has been added successfully!').then(()=>{
-          this.router.navigate(['/main-page']);
+          this.router.navigate(['/main-page/feed']);
         })
       } else{
         this.isLoading = false;
@@ -77,6 +70,6 @@ export class CreatePostComponent implements OnInit {
   }
 
   goBack(){
-    this.router.navigate(['/main-page']);
+    this.router.navigate(['/main-page/feed']);
   }
 }

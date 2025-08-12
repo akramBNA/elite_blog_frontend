@@ -4,16 +4,13 @@ import { Observable } from 'rxjs';
 import { environment } from '../environments/environments';
 
 @Injectable({ providedIn: 'root' })
-export class RolesService {
+export class CommentssService {
   constructor(private http: HttpClient) {}
 
   readonly base_url = environment.backendURL;
 
-  getAllRoles(): Observable<any> {
-    return this.http.get<any>(`${this.base_url}/roles/getAllRoles`);
+  createComment(comment_data:any): Observable<any> {
+    return this.http.post<any>(`${this.base_url}/comments/createComment`, comment_data);
   };
 
-  updateRole(id: any, roleType: string): Observable<any> {
-    return this.http.put<any>(`${this.base_url}/roles/updateRole/${id}`, {roleType});
-  };
 }
