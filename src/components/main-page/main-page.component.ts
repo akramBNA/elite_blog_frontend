@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UsersService } from '../../services/users.services';
-import { SwalService } from '../../shared/swal.service';
+import { SwalService } from '../../shared/Swal/swal.service'
 
 @Component({
   selector: 'app-main-page',
