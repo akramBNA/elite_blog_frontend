@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
+import { SwalService } from '../../shared/Swal/swal.service';
 
 @Component({
   selector: 'app-signup',
@@ -35,7 +36,8 @@ export class SignupComponent {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private swalService: SwalService,
   ) {
     this.signupForm = this.fb.group({
       firstName: ['', [Validators.required]],
@@ -53,8 +55,7 @@ export class SignupComponent {
 
   onSubmit(): void {
     if (this.signupForm.invalid || this.passwordMismatch) {
-      // TODO: Add SweetAlert once ready
-      console.warn('Invalid form or passwords do not match');
+      this.swalService.showWarning('Passwords missmatch!');
       return;
     }
 
