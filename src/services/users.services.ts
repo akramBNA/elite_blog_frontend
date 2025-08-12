@@ -16,4 +16,10 @@ export class UsersService {
     signup(user_data:any): Observable<any> {
       return this.http.post<any>(`${this.base_url}/users/signUp`, user_data);
     };
+
+    logout(refreshToken: string): Observable<any> {
+      return this.http.post<any>(`${this.base_url}/users/logout`,{ refreshToken },
+        { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken') || ''}`} });
+    };
+
 }
