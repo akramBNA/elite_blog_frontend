@@ -87,6 +87,7 @@ export class UsersListComponent implements OnInit {
         this.isEmpty = this.users.length === 0;
       } else {
         this.isLoading = false;
+        this.users = [];
       }
     });
   }
@@ -99,5 +100,9 @@ export class UsersListComponent implements OnInit {
 
   clearSearch() {
     this.keywordControl.setValue('');
+  }
+
+  editRole(id:any){
+    
   }
 }
