@@ -6,6 +6,7 @@ import { AccessDeniedComponent } from '../components/access-denied/access-denied
 import { AuthGuard } from '../guards/auth.guard';
 import { UsersListComponent } from '../components/users-list/users-list.component';
 import { CreatePostComponent } from '../components/create-post/create-post.component';
+import { FeedComponent } from '../components/feed/feed.component';
 
 
 export const routes: Routes = [
@@ -16,6 +17,7 @@ export const routes: Routes = [
     { path: 'main-page', component: MainPageComponent, canActivate: [AuthGuard], canActivateChild:[AuthGuard], children: [
         { path: 'users-list', component: UsersListComponent},
         { path: 'create-post', component: CreatePostComponent},
+        { path: 'feed', component: FeedComponent}
     ]},
 
 ];
