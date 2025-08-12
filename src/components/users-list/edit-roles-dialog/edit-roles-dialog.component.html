@@ -1,16 +1,22 @@
-<h2 mat-dialog-title>Edit Role for {{ firstName }} {{ lastName }}</h2>
-    <form [formGroup]="form" (ngSubmit)="submit()">
-      <mat-form-field appearance="fill" class="w-full">
-        <mat-label>Role</mat-label>
-        <mat-select formControlName="role" required>
-          <mat-option *ngFor="let role of roles" [value]="role._id">
-            {{ role.roleType }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+<div class="w-auto h-auto m-8">
+  <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 
-      <div class="mt-4 flex justify-end gap-2">
-        <button mat-button type="button" (click)="close()">Cancel</button>
-        <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">Save</button>
-      </div>
-    </form>
+  <h2 mat-dialog-title>Edit Role for {{ firstName }} {{ lastName }}</h2>
+  <form [formGroup]="roleForm">
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role" required>
+        <mat-option *ngFor="let role of roles" [value]="role._id">
+          {{ role.roleType }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="mt-4 flex justify-end gap-2">
+      <button class="btn-cancel" (click)="close()">Cancel</button>
+      <button class="btn-add" type="submit" [disabled]="roleForm.invalid">
+        Save
+      </button>
+    </div>
+  </form>
+</div>

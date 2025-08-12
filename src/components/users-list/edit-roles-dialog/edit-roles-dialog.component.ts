@@ -27,11 +27,12 @@
 // @Component({
 //   selector: 'app-edit-role-dialog',
 //   standalone: true,
-//   imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule],
+//   imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, LoadingSpinnerComponent],
 //   templateUrl: './edit-roles-dialog.component.html'
 // })
 // export class EditRoleDialogComponent {
-//   role: FormGroup;
+//   isLoading: boolean = false;
+//   roleForm: FormGroup;
 
 
 //   // roles = this.data.roles;
@@ -43,11 +44,12 @@
 //   constructor(
 //     private rolesService: RolesService,
 //     private usersService: UsersService,
+//     private swalService: SwalService,
 //     private fb: FormBuilder,
 //     private dialogRef: MatDialogRef<EditRoleDialogComponent>,
 //     @Inject(MAT_DIALOG_DATA) public data: DialogData
 //   ) {
-//     this.role = this.fb.group({
+//     this.roleForm = this.fb.group({
 //       role: [this.data.currentRoleId, Validators.required]
 //     });
 //   }
@@ -64,7 +66,20 @@
 //     });
 //   };
 
-//   updateRole(){}
+//   updateRole(id:any, role:any){
+//     this.isLoading = true;
+//     this.rolesService.updateRole(id, role).subscribe((data: any) => {
+//       if(data.success){
+//         this.isLoading = false;
+//         this.swalService.showSuccess('User role successfully updated!').then(()=>{
+
+//         })
+//       } else {
+//         this.isLoading = false;
+//       this.swalService.showError('Failed to update user role, please try again.');
+//       }
+//     })
+//   }
 
 //   close() {
 //     this.dialogRef.close();

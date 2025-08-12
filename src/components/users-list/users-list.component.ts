@@ -7,7 +7,9 @@ import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-sp
 import { MatInputModule } from "@angular/material/input";
 import { MatIconModule } from "@angular/material/icon";
 import { CommonModule } from '@angular/common';
-import { M } from "../../../node_modules/@angular/material/paginator.d-CexYxFq4";
+import { MatDialog } from '@angular/material/dialog';
+// import { EditRoleDialogComponent } from './edit-roles-dialog/edit-roles-dialog.component';
+import { RolesService } from '../../services/roles.services';
 
 interface User {
   _id: string;
@@ -54,7 +56,11 @@ export class UsersListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private rolesService: RolesService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.loadStats();
@@ -102,7 +108,41 @@ export class UsersListComponent implements OnInit {
     this.keywordControl.setValue('');
   }
 
-  editRole(id:any){
-    
+  editRole(userId: string) {
+    // const user = this.users.find(u => u._id === userId);
+    // if (!user) return;
+
+    // this.rolesService.getAllRoles().subscribe((rolesData: any) => {
+    //   if (!rolesData.success) {
+    //     // Handle error (optional)
+    //     return;
+    //   }
+
+    //   const dialogRef = this.dialog.open(EditRoleDialogComponent, {
+    //     width: '400px',
+    //     data: {
+    //       userId: user._id,
+    //       firstName: user.firstName,
+    //       lastName: user.lastName,
+    //       currentRoleId: user.role,  // assuming role contains _id or you might need to adapt
+    //       roles: rolesData.data
+    //     }
+    //   });
+
+    //   dialogRef.afterClosed().subscribe(result => {
+    //     if (result) {  // result is the selected role id from dialog
+    //       this.usersService.updateRole(user._id, result).subscribe((res: any) => {
+    //         if (res.success) {
+    //           this.swalService.showSuccess('User role successfully updated!').then(() => {
+    //             this.loadUsers();  // refresh list
+    //           });
+    //         } else {
+    //           this.swalService.showError('Failed to update user role, please try again.');
+    //         }
+    //       });
+    //     }
+    //   });
+    // });
   }
+
 }
