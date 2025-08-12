@@ -31,7 +31,7 @@ export class UsersService {
     return this.http.post<RefreshResponse>(`${this.base_url}/users/refreshToken`, { refreshToken });
   }
 
-  getAllActiveUsers(page: number, limit: number, keyword: string): Observable<any> {
+  getAllActiveUsers(limit: number, page: number, keyword: string): Observable<any> {
     const params: any = {
       page: page.toString(),
       limit: limit.toString(),
