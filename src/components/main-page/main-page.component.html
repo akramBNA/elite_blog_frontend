@@ -4,9 +4,9 @@
     <div class="text-lg font-bold">Elite Blog</div>
 
     <div class="hidden md:flex space-x-6">
-      <a routerLink="/main-page" class="hover:text-gray-300">Content Feed</a>
+      <a routerLink="/main-page/feed" class="hover:text-gray-300">Feed</a>
+      <a routerLink="/main-page/create-post" class="hover:text-gray-300">Create Post</a>
       <a routerLink="/main-page/users-list" class="hover:text-gray-300">Users List</a>
-      <a routerLink="/profile" class="hover:text-gray-300">Profile</a>
     </div>
 
     <div class="hidden md:block">
@@ -25,18 +25,17 @@
   </div>
 
   <div *ngIf="isMenuOpen" class="md:hidden mt-3 space-y-2">
-    <a routerLink="/main-page" class="block hover:text-gray-300">Content Feed</a>
+    <a routerLink="/main-page/feed" class="block hover:text-gray-300">Feed</a>
+    <a routerLink="/main-page/create-post" class="block hover:text-gray-300">Create Post</a>
     <a routerLink="/main-page/users-list" class="block hover:text-gray-300">Users List</a>
-    <a routerLink="/profile" class="block hover:text-gray-300">Profile</a>
     <button class="bg-red-500 px-3 py-1 rounded hover:bg-red-600" (click)="logout()">Logout</button>
   </div>
 </nav>
 
 <div class="min-h-[calc(100vh-120px)] p-6">
-  <!-- <h1 class="text-2xl font-bold">Welcome to the Elite Blog</h1> -->
    <router-outlet></router-outlet>
 </div>
 
 <footer class="bg-gray-900 text-white py-3 text-center">
-  Developed with ❤️ by Akram © {{ currentYear }}
+  Developed with ❤️ by Akram Benaoun © {{ currentYear }}
 </footer>
