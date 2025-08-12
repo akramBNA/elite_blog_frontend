@@ -40,7 +40,7 @@ export class MainPageComponent {
 
         this.router.navigate(['/']);
       } else {
-        this.swalService.showError('Somthing went wrong, could not log you out!');
+        this.swalService.showError('Something went wrong, could not log you out!');
       }
     });
   }
