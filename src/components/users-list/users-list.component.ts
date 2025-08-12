@@ -67,31 +67,26 @@ export class UsersListComponent implements OnInit {
   }
 
   loadStats() {
-    this.usersService.getUserStats().subscribe({
-      next: (res) => {
-        if (res.success) {
-          this.stats = res.data;
-        }
-      },
-      error: () => {
-        // handle error if needed
+    this.usersService.getUserStats().subscribe((data: any) =>{
+      if(data.success){
+        this.stats = data.data;
       }
     });
   }
 
   loadUsers() {
+    this.isEmpty = false;
     this.isLoading = true;
     const keyword = this.keywordControl.value || '';
-    this.usersService.getAllActiveUsers(this.limit, this.page, keyword).subscribe({
-      next: (res) => {
-        if (res.success) {
-          this.users = res.data;
-          this.totalUsers = res.meta.total;
-          this.isEmpty = this.users.length === 0;
-        }
+    this.usersService.getAllActiveUsers(this.limit, this.page, keyword).subscribe((data: any) => {
+      console.log(" data ?? ", data);
+      
+      if(data.success){
         this.isLoading = false;
-      },
-      error: () => {
+        this.users = data.data;
+        this.totalUsers = data.meta.total;
+        this.isEmpty = this.users.length === 0;
+      } else {
         this.isLoading = false;
       }
     });

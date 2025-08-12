@@ -12,5 +12,5 @@ export const routes: Routes = [
     { path: 'access-denied', component: AccessDeniedComponent },
     { path: 'sign-up', component: SignupComponent},
     { path: 'main-page', component: MainPageComponent, canActivate: [AuthGuard]},
-    { path: 'users-list', component: UsersListComponent, canActivate: [AuthGuard]},
+    { path: 'users-list', component: UsersListComponent}, //, canActivate: [AuthGuard]
 ];

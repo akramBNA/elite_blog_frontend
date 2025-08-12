@@ -28,14 +28,7 @@
 <mat-form-field class="w-full sm:w-1/3" appearance="fill">
   <mat-label>Rechercher par nom</mat-label>
   <input matInput type="text" [formControl]="keywordControl" placeholder="Tapez un nom..." />
-  <button
-    *ngIf="keywordControl.value"
-    matSuffix
-    mat-icon-button
-    aria-label="Clear"
-    (click)="clearSearch()"
-    disableRipple
-  >
+  <button *ngIf="keywordControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()" disableRipple>
     <mat-icon>close</mat-icon>
   </button>
 </mat-form-field>
