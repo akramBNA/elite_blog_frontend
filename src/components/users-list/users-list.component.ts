@@ -133,14 +133,18 @@ export class UsersListComponent implements OnInit {
         }
       });
 
-      dialogRef.afterClosed().subscribe(result => {        
+      dialogRef.afterClosed().subscribe(result => {      
+        this.isLoading = true;  
         if (result) {
           this.rolesService.updateRole(user._id, result).subscribe((res: any) => {
             if (res.success) {
+              this.isLoading = false;
               this.swalService.showSuccess('User role successfully updated!').then(() => {
                 this.loadUsers();
               });
             } else {
+                            this.isLoading = false;
+
               this.swalService.showError('Failed to update user role, please try again.');
             }
           });
