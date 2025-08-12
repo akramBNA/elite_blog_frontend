@@ -6,7 +6,7 @@
     <p class="mb-2">{{ post.content }}</p>
 
     <p class="text-sm text-gray-600 mb-2">
-      By {{ post.author?.firstName }} {{ post.author?.lastName }} on {{ post.createdAt | date:'medium' }}
+      By <span class="font-bold">{{ post.author?.firstName }} {{ post.author?.lastName }}</span> on {{ post.createdAt | date:'medium' }}
     </p>
 
     <div *ngIf="post.image" class="mb-2">
