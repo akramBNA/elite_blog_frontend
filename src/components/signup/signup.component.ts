@@ -57,25 +57,28 @@ export class SignupComponent {
 
   onSubmit(): void {
     if (this.signupForm.invalid || this.passwordMismatch) {
-      this.swalService.showWarning('Passwords missmatch!');
+      this.swalService.showWarning('Please check your credentials!');
       return;
     }
 
     this.isLoading = true;
     const { confirmPassword, ...userData } = this.signupForm.value;
+    console.log("form values : ", this.signupForm.value);
+    
 
-    this.http.post('http://localhost:5000/api/users/signup', userData)
-      .subscribe({
-        next: (res: any) => {
-          this.isLoading = false;
-          console.log('Signup successful:', res);
-          this.router.navigate(['/login']);
-        },
-        error: (err) => {
-          this.isLoading = false;
-          console.error('Signup failed:', err);
-        }
-      });
+    this.userService.signup(userData).subscribe((data: any) => {
+      if (data.success) {
+        this.isLoading = false;
+        localStorage.setItem('accessToken', data.data.accessToken);
+        localStorage.setItem('refreshToken', data.data.refreshToken);
+        localStorage.setItem('user', JSON.stringify(data.data.user));
+
+        this.router.navigate(['/main-page']);
+      } else {
+        this.isLoading = false;
+        this.swalService.showError('Something went wrong, please try again!');
+      }
+    });
   }
 
   goBack(): void {

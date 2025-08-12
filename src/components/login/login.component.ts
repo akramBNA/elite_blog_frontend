@@ -48,12 +48,12 @@ export class LoginComponent {
           this.router.navigate(['/main-page']);
         } else {
           this.isLoading = false;
-          this.swalService.showError('Something went wrong! please try again');
+          this.swalService.showError('Something went wrong, please try again!');
         }
       });
     }else {
         this.isLoading = false;
-        this.swalService.showError('failed to login please check your credentials and try again');
+        this.swalService.showWarning('Please check your crendentials!');
     }
   }
 
