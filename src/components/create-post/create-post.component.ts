@@ -2,20 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
+import { PostsService } from '../../services/posts.services';
+import { SwalService } from '../../shared/Swal/swal.service';
+import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-create-post',
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.scss'],
-  imports: [MatInputModule, ReactiveFormsModule],
+  imports: [CommonModule, MatInputModule, ReactiveFormsModule, LoadingSpinnerComponent],
 })
 export class CreatePostComponent implements OnInit {
+  isLoading: boolean = false;
+  submitted: boolean = false;
   postForm!: FormGroup;
   authorId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private postService: PostsService,
+    private swalService: SwalService,
     ) {
     this.postForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(150)]],
@@ -31,7 +39,12 @@ export class CreatePostComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.postForm.invalid || !this.authorId) return;
+    this.submitted = true;
+    this.isLoading = true;
+    if (this.postForm.invalid || !this.authorId){
+      this.isLoading = false;
+      this.swalService.showError('Failed to add post, check your inputs!');
+    }
 
     const formValue = this.postForm.value;
 
@@ -50,7 +63,17 @@ export class CreatePostComponent implements OnInit {
 
     console.log('Post to submit:', postData);
 
-    // TODO: call your postsService.createPost(postData)
+    this.postService.createPost(postData).subscribe((data:any)=>{
+      if(data.success){
+        this.isLoading = false;
+        this.swalService.showSuccess('Your post has been added successfully!').then(()=>{
+          this.router.navigate(['/main-page']);
+        })
+      } else{
+        this.isLoading = false;
+        this.swalService.showError('Something went wrong, try again later!');
+      }
+    })
   }
 
   goBack(){
