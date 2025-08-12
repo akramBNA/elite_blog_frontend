@@ -3,6 +3,8 @@ import { PostsService } from '../../services/posts.services';
 import { SwalService } from '../../shared/Swal/swal.service';
 import { LoadingSpinnerComponent } from "../../shared/loading-spinner/loading-spinner.component";
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatIconModule } from "@angular/material/icon";  // <-- Needed for ngModel
 
 interface Post {
   _id: string;
@@ -20,7 +22,7 @@ interface Post {
   selector: 'app-feed',
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss'],
-  imports: [CommonModule ,LoadingSpinnerComponent]
+  imports: [CommonModule, LoadingSpinnerComponent, FormsModule, MatIconModule]
 })
 export class FeedComponent implements OnInit {
   posts: Post[] = [];
@@ -28,6 +30,8 @@ export class FeedComponent implements OnInit {
   limit: number = 20;
   totalPages: number = 1;
   isLoading: boolean = false;
+
+  newComments: { [postId: string]: string } = {};
 
   constructor(private postsService: PostsService, private swalService: SwalService) {}
 
@@ -67,5 +71,38 @@ export class FeedComponent implements OnInit {
     if (scrollTop + windowHeight > fullHeight - 100) {
       this.loadPosts();
     }
+  }
+
+  onEditPost(post: Post) {
+    this.swalService.showAlert(`Edit feature coming soon for post "${post.title}"`);
+  }
+
+  addComment(post: Post) {
+    const content = this.newComments[post._id]?.trim();
+    if (!content) return;
+
+    const user = localStorage.getItem('user');
+    if (!user) {
+      this.swalService.showError('You must be logged in to comment');
+      return;
+    }
+
+    const userId = JSON.parse(user)._id;
+
+    // this.postsService.addCommentToPost(post._id, userId, content).subscribe({
+    //   next: (res) => {
+    //     if (res.success) {
+    //       // Append comment to post.comments locally
+    //       post.comments.push(res.data);
+    //       // Clear input
+    //       this.newComments[post._id] = '';
+    //     } else {
+    //       this.swalService.showError('Failed to add comment');
+    //     }
+    //   },
+    //   error: () => {
+    //     this.swalService.showError('Error adding comment');
+    //   }
+    // });
   }
 }
