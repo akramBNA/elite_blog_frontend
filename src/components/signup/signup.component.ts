@@ -73,7 +73,7 @@ export class SignupComponent {
         localStorage.setItem('refreshToken', data.data.refreshToken);
         localStorage.setItem('user', JSON.stringify(data.data.user));
 
-        this.router.navigate(['/main-page']);
+        this.router.navigate(['/main-page/feed']);
       } else {
         this.isLoading = false;
         this.swalService.showError('Something went wrong, please try again!');
