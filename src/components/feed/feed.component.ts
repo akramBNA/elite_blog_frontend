@@ -42,25 +42,12 @@ export class FeedComponent implements OnInit {
     private postsService: PostsService, 
     private swalService: SwalService,
     private commentsService: CommentssService,
-    private checkRoleService: CheckRolesService,
+    public checkRoleService: CheckRolesService,
     private dialog: MatDialog
 
   ) {}
 
   ngOnInit() {
-    if(this.checkRoleService.isAdmin()){
-      console.log("its an admin");
-    };
-
-     if(this.checkRoleService.isEditor()){
-      console.log("its an isEditor");
-    };
-
-     if(this.checkRoleService.isWriter()){
-      console.log("its an isWriter");
-    };
-
-
     this.loadPosts();
   }
 

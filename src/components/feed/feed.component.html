@@ -12,7 +12,7 @@
         <mat-icon>edit</mat-icon>
       </button>
 
-      <button
+      <button *ngIf="checkRoleService.isAdmin()"
         (click)="deletePost(post._id)"
         class="text-red-500 hover:text-red-700"
         title="Delete Post"
