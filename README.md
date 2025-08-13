@@ -39,6 +39,7 @@ Due to time constraints, some planned features (like NgRx store for state manage
 
 * npm install
 * npm start
+* Also set up URL for the Backend and the socket.
 
 ---
 
