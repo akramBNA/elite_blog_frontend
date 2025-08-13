@@ -168,31 +168,39 @@ export class FeedComponent implements OnInit {
     });
   }
 
-  addReply(commentId: string, postId: string) {
-    const content = this.newReplies[commentId]?.trim();
+  addReply(post: Post, comment: any) {
+    this.isLoading = true;
+    const content = this.newReplies[comment._id]?.trim();
     if (!content) return;
 
     const user = localStorage.getItem('user');
-    if (!user) return;
+    if (!user) {
+      this.isLoading = false;
+      this.swalService.showError('You must be logged in to reply');
+      return;
+    }
 
     const userId = JSON.parse(user)._id;
+    const reply_data = {
+      commentId: comment._id,
+      userId: userId,
+      content: content
+    };
 
-    this.commentsService.addReply({ commentId, userId, content }).subscribe({
-      next: (res: any) => {
+    this.commentsService.addReply(reply_data).subscribe({
+      next: (res) => {
         if (res.success) {
-          const post = this.posts.find(p => p._id === postId);
-          if (!post) return;
-
-          const commentIndex = post.comments.findIndex(c => c._id === commentId);
-          if (commentIndex !== -1) {
-            post.comments[commentIndex] = res.data;
-          }
-
-          this.newReplies[commentId] = '';
+          this.isLoading = false;
+          comment.replies = res.data.replies || [];
+          this.newReplies[comment._id] = '';
+        } else {
+          this.isLoading = false;
+          this.swalService.showError('Failed to add reply');
         }
       },
       error: () => {
-        this.swalService.showError('Failed to add reply');
+        this.isLoading = false;
+        this.swalService.showError('Error adding reply');
       }
     });
   }
