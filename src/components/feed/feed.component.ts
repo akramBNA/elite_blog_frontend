@@ -83,6 +83,28 @@ export class FeedComponent implements OnInit {
     this.swalService.showAlert(`Edit feature coming soon for post "${post.title}"`);
   }
 
+  deletePost(id: any) {
+    this.swalService.showConfirmation('Are you sure you want to delete this post?').then(() => {
+      this.isLoading = true;
+      this.postsService.deletePost(id).subscribe({
+        next: (data: any) => {
+          this.isLoading = false;
+          if (data.success) {
+            this.posts = this.posts.filter(post => post._id !== id);
+
+            this.swalService.showSuccess('This post was deleted successfully!');
+          } else {
+            this.swalService.showError('Failed to delete this post, try again!');
+          }
+        },
+        error: () => {
+          this.isLoading = false;
+          this.swalService.showError('Error deleting post');
+        }
+      });
+    });
+  }
+
   addComment(post: Post) {
     this.isLoading = true;
     const content = this.newComments[post._id]?.trim();
