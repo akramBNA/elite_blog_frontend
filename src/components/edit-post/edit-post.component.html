@@ -1,1 +1,32 @@
-<p>edit-post works!</p>
+<div class="w-auto h-auto p-6">
+  <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+  <h2 class="text-xl font-semibold mb-4">Edit Post</h2>
+
+  <form [formGroup]="postForm" (ngSubmit)="submit()">
+    <mat-form-field appearance="fill" class="w-full mb-3">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full mb-3">
+      <mat-label>Content</mat-label>
+      <textarea matInput formControlName="content" rows="5" required></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full mb-3">
+      <mat-label>Tags (comma separated)</mat-label>
+      <input matInput formControlName="tags">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full mb-3">
+      <mat-label>Image URL</mat-label>
+      <input matInput formControlName="image">
+    </mat-form-field>
+
+    <div class="flex justify-end gap-2 mt-4">
+      <button type="button" class="btn-cancel" (click)="close()">Cancel</button>
+      <button type="submit" class="btn-add" [disabled]="postForm.invalid">Save</button>
+    </div>
+  </form>
+</div>

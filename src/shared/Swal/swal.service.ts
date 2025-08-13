@@ -9,7 +9,7 @@ export class SwalService {
 
   constructor() { }
 
-  showSuccess(message: string, title: string = 'Succès') {
+  showSuccess(message: string, title: string = 'Success') {
     return Swal.fire({
       icon: 'success',
       title: title,
@@ -18,7 +18,7 @@ export class SwalService {
     });
   }
 
-  showError(message: string, title: string = 'Erreur') {
+  showError(message: string, title: string = 'Error') {
     return Swal.fire({
       icon: 'error',
       title: title,
@@ -27,7 +27,7 @@ export class SwalService {
     });
   }
 
-  showWarning(message: string, title: string = 'Attention') {
+  showWarning(message: string, title: string = 'Warning') {
     return Swal.fire({
       icon: 'warning',
       title: title,
@@ -38,15 +38,15 @@ export class SwalService {
 
   showConfirmation(
     message: string,
-    title: string = 'Attention !'
+    title: string = 'Warning !'
   ) {
     return Swal.fire({
       icon: 'warning',
       title: title,
       text: message,
       showCancelButton: true,
-      confirmButtonText: 'Oui',
-      cancelButtonText: 'Non',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
       confirmButtonColor: '#28a745',
       cancelButtonColor: '#dc3545',
       reverseButtons: false,

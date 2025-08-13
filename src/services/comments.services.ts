@@ -13,4 +13,8 @@ export class CommentssService {
     return this.http.post<any>(`${this.base_url}/comments/createComment`, comment_data);
   };
 
+  addReply(reply_data:any): Observable<any> {
+    return this.http.post<any>(`${this.base_url}/comments/addReply`, reply_data);
+  };
+
 }
