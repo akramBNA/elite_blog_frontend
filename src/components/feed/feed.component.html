@@ -80,4 +80,14 @@
   <div *ngIf="!isLoading && posts.length === 0" class="text-center text-gray-500 mt-10">
     No posts found..
   </div>
+
+  <button
+    *ngIf="showScrollTop"
+    (click)="scrollToTop()"
+    class="fixed bottom-6 right-6 bg-green-600 text-white w-10 h-10 flex items-center justify-center shadow-lg hover:bg-green-700 transition cursor-pointer"
+    title="Scroll to Top"
+  >
+    <mat-icon>arrow_upward</mat-icon>
+  </button>
+
 </div>

@@ -33,6 +33,7 @@ export class FeedComponent implements OnInit {
   limit: number = 20;
   totalPages: number = 1;
   isLoading: boolean = false;
+  showScrollTop = false;
 
   newComments: { [postId: string]: string } = {};
 
@@ -80,6 +81,12 @@ export class FeedComponent implements OnInit {
     if (scrollTop + windowHeight > fullHeight - 100) {
       this.loadPosts();
     }
+
+    this.showScrollTop = scrollTop > 300;
+  }
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   onEditPost(post: Post) {
