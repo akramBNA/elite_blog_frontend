@@ -18,6 +18,7 @@ export class MainPageComponent {
   isMenuOpen = false;
   currentYear = new Date().getFullYear();
   notifications: any[] = [];
+  user_name:string = '';
 
   constructor(
     private userService: UsersService,
@@ -25,7 +26,12 @@ export class MainPageComponent {
     public checkRoleService: CheckRolesService,
     private notificationService: NotificationService,
     private router: Router
-  ) {}
+  ) {
+    const userString = localStorage.getItem('user');
+    if(userString){
+      this.user_name = JSON.parse(userString).firstName;
+    }
+  }
 
   ngOnInit() {
     const user = localStorage.getItem('user');

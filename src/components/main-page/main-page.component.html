@@ -24,7 +24,8 @@
       </div>
     </div>
 
-    <div class="hidden md:block">
+    <div class="hidden md:block space-x-3">
+      <span class="hover:text-gray-300">Welcome, {{ user_name }}</span>
       <button class="btn-cancel" (click)="logout()">Logout</button>
     </div>
 
@@ -40,6 +41,7 @@
   </div>
 
   <div *ngIf="isMenuOpen" class="md:hidden mt-3 space-y-2">
+    <span class="block text-yellow-300">Welcome, {{ user_name }}</span>
     <a routerLink="/main-page/feed" class="block hover:text-gray-300">Feed</a>
     <a *ngIf="checkRoleService.isAdmin() || checkRoleService.isEditor() || checkRoleService.isWriter()" routerLink="/main-page/create-post" class="block hover:text-gray-300">Create Post</a>
     <a *ngIf="checkRoleService.isAdmin()" routerLink="/main-page/users-list" class="block hover:text-gray-300">Users List</a>
