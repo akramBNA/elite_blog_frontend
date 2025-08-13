@@ -19,6 +19,12 @@ It allows users to create, edit, and manage blog posts with role-based permissio
 
 ---
 
+## Backend Repo
+
+* https://github.com/akramBNA/elite_blog_backend
+
+---
+
 ## Development Approach
 
 This project was developed under a restricted timeframe, following the principle:
@@ -172,4 +178,3 @@ Due to time constraints, some planned features (like NgRx store for state manage
 
 ### Users Search
 ![Users Search](src/assets/users_search_fullscreen.png)
-
