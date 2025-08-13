@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { PostsService } from '../../services/posts.services';
@@ -11,7 +16,12 @@ import { CommonModule } from '@angular/common';
   selector: 'app-create-post',
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.scss'],
-  imports: [CommonModule, MatInputModule, ReactiveFormsModule, LoadingSpinnerComponent],
+  imports: [
+    CommonModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    LoadingSpinnerComponent,
+  ],
 })
 export class CreatePostComponent implements OnInit {
   isLoading: boolean = false;
@@ -23,8 +33,8 @@ export class CreatePostComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private postService: PostsService,
-    private swalService: SwalService,
-    ) {
+    private swalService: SwalService
+  ) {
     this.postForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(150)]],
       content: ['', [Validators.required]],
@@ -41,7 +51,7 @@ export class CreatePostComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     this.isLoading = true;
-    if (this.postForm.invalid || !this.authorId){
+    if (this.postForm.invalid || !this.authorId) {
       this.isLoading = false;
       this.swalService.showError('Failed to add post, check your inputs!');
     }
@@ -51,25 +61,35 @@ export class CreatePostComponent implements OnInit {
     const postData = {
       title: formValue.title.trim(),
       content: formValue.content.trim(),
-      tags: formValue.tags ? formValue.tags.split(',').map((tag: string) => tag.trim()).filter((tag: string) => tag.length > 0) : [],
+      tags: formValue.tags
+        ? formValue.tags
+            .split(',')
+            .map((tag: string) => tag.trim())
+            .filter((tag: string) => tag.length > 0)
+        : [],
       image: formValue.image.trim(),
       author: this.authorId,
     };
 
-    this.postService.createPost(postData).subscribe((data:any)=>{
-      if(data.success){
+    this.postService.createPost(postData).subscribe({
+      next: (data: any) => {
         this.isLoading = false;
-        this.swalService.showSuccess('Your post has been added successfully!').then(()=>{
-          this.router.navigate(['/main-page/feed']);
-        })
-      } else{
+        if (data.success) {
+          this.swalService.showSuccess('Your post has been added successfully!').then(() => {
+              this.router.navigate(['/main-page/feed']);
+            });
+        } else {
+          this.swalService.showError('Something went wrong, try again later!');
+        }
+      },
+      error: () => {
         this.isLoading = false;
-        this.swalService.showError('Something went wrong, try again later!');
-      }
-    })
+        this.swalService.showError('Error updating post');
+      },
+    });
   }
 
-  goBack(){
+  goBack() {
     this.router.navigate(['/main-page/feed']);
   }
 }
