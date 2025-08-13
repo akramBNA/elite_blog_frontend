@@ -96,6 +96,16 @@ Due to time constraints, some planned features (like NgRx store for state manage
 
 ---
 
+## Other features:
+
+* Infinite scroll: post are loaded by a batch of 5 posts, another batach will load when reaching the buttom of the page.
+
+* Protecting routes with auth guard & interceptors.
+
+* Loading spinner & alerts are used from a shared component.
+
+* Using a role based permissions: some feature like users list and delete, edit posts are only visible to some roles..
+
 ## Future Improvements
 
 * Enhance UI/UX for a smoother experience

@@ -31,7 +31,7 @@ interface Post {
 export class FeedComponent implements OnInit {
   posts: Post[] = [];
   page: number = 1;
-  limit: number = 20;
+  limit: number = 5;
   totalPages: number = 1;
   isLoading: boolean = false;
   showScrollTop = false;
