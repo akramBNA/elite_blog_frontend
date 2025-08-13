@@ -21,4 +21,8 @@ export class PostsService {
   return this.http.put<any>(`${this.base_url}/posts/deletePost/${id}`, {});
   };
 
+  updatePost(id: number): Observable<any> {
+  return this.http.put<any>(`${this.base_url}/posts/updatePost/${id}`, {});
+  };
+
 }
