@@ -112,3 +112,8 @@ Due to time constraints, some planned features (like NgRx store for state manage
 
 ## ScreenShots:
 
+### Home Page
+![Home Page Fullscreen](assets/homepage_fullscreen.png)
+
+### Post Editor
+![Post Editor](assets/homepage_fullscreen.png)
