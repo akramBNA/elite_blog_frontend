@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { UsersService } from '../../services/users.services';
 import { SwalService } from '../../shared/Swal/swal.service'
 // import { RouterOutlet } from "../../../node_modules/@angular/router/router_module.d-Bx9ArA6K";
+import { CheckRolesService } from '../../services/checkRoles.services';
 
 @Component({
   selector: 'app-main-page',
@@ -19,6 +20,7 @@ export class MainPageComponent {
   constructor(
     private userService: UsersService,
     private swalService: SwalService,
+    public checkRoleService: CheckRolesService,
     private router: Router
   ) {}
 
