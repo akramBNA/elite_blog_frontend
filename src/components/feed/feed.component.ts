@@ -37,6 +37,8 @@ export class FeedComponent implements OnInit {
   showScrollTop = false;
 
   newComments: { [postId: string]: string } = {};
+  newReplies: { [commentId: string]: string } = {};
+
 
   constructor(
     private postsService: PostsService, 
@@ -165,4 +167,34 @@ export class FeedComponent implements OnInit {
       }
     });
   }
+
+  addReply(commentId: string, postId: string) {
+    const content = this.newReplies[commentId]?.trim();
+    if (!content) return;
+
+    const user = localStorage.getItem('user');
+    if (!user) return;
+
+    const userId = JSON.parse(user)._id;
+
+    this.commentsService.addReply({ commentId, userId, content }).subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          const post = this.posts.find(p => p._id === postId);
+          if (!post) return;
+
+          const commentIndex = post.comments.findIndex(c => c._id === commentId);
+          if (commentIndex !== -1) {
+            post.comments[commentIndex] = res.data;
+          }
+
+          this.newReplies[commentId] = '';
+        }
+      },
+      error: () => {
+        this.swalService.showError('Failed to add reply');
+      }
+    });
+  }
+
 }
