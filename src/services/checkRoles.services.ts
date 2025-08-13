@@ -3,18 +3,25 @@ import { Injectable } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class CheckRolesService {
 
-  getRole(): string | null {
+  private getUser(): any | null {
     const userString = localStorage.getItem('user');
     if (userString) {
       try {
-        const user = JSON.parse(userString);
-        return user.role || null;
+        return JSON.parse(userString);
       } catch (error) {
         console.error('Error parsing user from localStorage:', error);
         return null;
       }
     }
     return null;
+  }
+
+  getRole(): string | null {
+    return this.getUser()?.role || null;
+  }
+
+  getUserId(): string | null {
+    return this.getUser()?._id || null;
   }
 
   isAdmin(): boolean {
@@ -27,6 +34,14 @@ export class CheckRolesService {
 
   isWriter(): boolean {
     return this.getRole() === 'Writer';
+  }
+
+  canEditPost(authorId: any): boolean {
+    return (
+      this.isAdmin() ||
+      this.isEditor() ||
+      (this.isWriter() && this.getUserId() === authorId)
+    );
   }
 
 }
