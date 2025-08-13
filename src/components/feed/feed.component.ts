@@ -8,6 +8,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { CommentssService } from '../../services/comments.services';
 import { EditPostComponent } from '../edit-post/edit-post.component';
 import { MatDialog } from '@angular/material/dialog';
+import {CheckRolesService} from '../../services/checkRoles.services';
 
 interface Post {
   _id: string;
@@ -41,11 +42,25 @@ export class FeedComponent implements OnInit {
     private postsService: PostsService, 
     private swalService: SwalService,
     private commentsService: CommentssService,
+    private checkRoleService: CheckRolesService,
     private dialog: MatDialog
 
   ) {}
 
   ngOnInit() {
+    if(this.checkRoleService.isAdmin()){
+      console.log("its an admin");
+    };
+
+     if(this.checkRoleService.isEditor()){
+      console.log("its an isEditor");
+    };
+
+     if(this.checkRoleService.isWriter()){
+      console.log("its an isWriter");
+    };
+
+
     this.loadPosts();
   }
 
