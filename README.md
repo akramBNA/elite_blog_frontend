@@ -115,5 +115,51 @@ Due to time constraints, some planned features (like NgRx store for state manage
 ### Home Page
 ![Home Page Fullscreen](src/assets/homepage_fullscreen.png)
 
-### Post Editor
-![Post Editor](src/assets/homepage_fullscreen.png)
+### Create Account
+![Create Account](src/assets/create_account_fullscreen.png)
+
+### Alert Popup
+![Alert Popup](src/assets/alert_popup_fullscreen.png)
+
+### Comment Notification
+![Comment Notification](src/assets/comment_notification_recieve_fullscreen.png)
+
+### Create Account Monile View
+![Create Account Monile View](src/assets/create_account_mobileview.png)
+
+### Create Post Mobile View
+![Create Post Mobile View](src/assets/create_post_mobileview.png)
+
+### Drop Down Menu Mobile View
+![Drop Down Menu Mobile View](src/assets/drop_down_menu_mobileview.png)
+
+### Home Page Mobile View
+![Home Page Mobile View](src/assets/homepage_mobileview.png)
+
+### Main Feed and Menu
+![Main Feed and Menu](src/assets/main_feed_and_footer_fullscreen.png)
+
+### Posts Feed Mobile View
+![Posts Feed Mobile View](src/assets/posts_feed_mobileview.png)
+
+### Reply Notification
+![Reply Notification](src/assets/reply_notification_recieve_fullview.png)
+
+### Reply with Comments
+![Reply with Comments](src/assets/reply_with_comments_fullscreen.png)
+
+### Update Role 1
+![Update Role 1](src/assets/update_role_fullscreen_1.png)
+
+### Update Role
+![Update Role](src/assets/update_role_fullscreen.png)
+
+### Users List
+![Users List](src/assets/users_list_fullscreen.png)
+
+### Users List Mobile View
+![Users List Mobile View](src/assets/users_list_mobileview.png)
+
+### Users Search
+![Users Search](src/assets/users_search_fullscreen.png)
+
