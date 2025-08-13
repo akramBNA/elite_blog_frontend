@@ -38,6 +38,7 @@ export class FeedComponent implements OnInit {
 
   newComments: { [postId: string]: string } = {};
   newReplies: { [commentId: string]: string } = {};
+  
 
 
   constructor(
@@ -189,12 +190,12 @@ export class FeedComponent implements OnInit {
 
     this.commentsService.addReply(reply_data).subscribe({
       next: (res) => {
+        this.isLoading = false;
         if (res.success) {
-          this.isLoading = false;
-          comment.replies = res.data.replies || [];
+          if (!comment.replies) comment.replies = [];
+          comment.replies.push(res.data);
           this.newReplies[comment._id] = '';
         } else {
-          this.isLoading = false;
           this.swalService.showError('Failed to add reply');
         }
       },
