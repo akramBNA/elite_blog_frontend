@@ -22,7 +22,7 @@ export class PostsService {
   };
 
   updatePost(id: number, post_data:any): Observable<any> {
-  return this.http.put<any>(`${this.base_url}/posts/updatePost/${id}`, {post_data});
+  return this.http.put<any>(`${this.base_url}/posts/updatePost/${id}`, post_data);
   };
 
 }

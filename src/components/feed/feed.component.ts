@@ -6,7 +6,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from "@angular/material/icon";
 import { CommentssService } from '../../services/comments.services';
-import { routes } from '../../app/app.routes';
+import { EditPostComponent } from '../edit-post/edit-post.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface Post {
   _id: string;
@@ -38,7 +39,9 @@ export class FeedComponent implements OnInit {
   constructor(
     private postsService: PostsService, 
     private swalService: SwalService,
-    private commentsService: CommentssService
+    private commentsService: CommentssService,
+    private dialog: MatDialog
+
   ) {}
 
   ngOnInit() {
@@ -80,7 +83,19 @@ export class FeedComponent implements OnInit {
   }
 
   onEditPost(post: Post) {
-    this.swalService.showAlert(`Edit feature coming soon for post "${post.title}"`);
+    const dialogRef = this.dialog.open(EditPostComponent, {
+      width: '500px',
+      data: { post }
+    });
+
+    dialogRef.afterClosed().subscribe((updatedPost: any) => {
+      if (updatedPost) {
+        const index = this.posts.findIndex(p => p._id === updatedPost._id);
+        if (index !== -1) {
+          this.posts[index] = { ...this.posts[index], ...updatedPost };
+        }
+      }
+    });
   }
 
   deletePost(id: any) {
