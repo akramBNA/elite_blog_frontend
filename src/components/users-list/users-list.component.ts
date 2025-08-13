@@ -96,7 +96,7 @@ export class UsersListComponent implements OnInit {
         this.isEmpty = this.users.length === 0;
       } else {
         this.isLoading = false;
-        this.users = [];
+        // this.users = [];
       }
     });
   }
@@ -151,6 +151,8 @@ export class UsersListComponent implements OnInit {
               this.swalService.showError('Failed to update user role, please try again.');
             }
           });
+        } else {
+          this.isLoading = false;
         }
       });
     });
