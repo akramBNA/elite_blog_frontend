@@ -9,6 +9,21 @@
       <a *ngIf="checkRoleService.isAdmin()" routerLink="/main-page/users-list" class="hover:text-gray-300">Users List</a>
     </div>
 
+    <div class="relative">
+      <button class="relative">
+        🔔
+        <span *ngIf="notifications.length" class="absolute top-0 right-0 bg-red-500 rounded-full w-4 h-4 text-xs text-white flex items-center justify-center">
+          {{ notifications.length }}
+        </span>
+      </button>
+
+      <div *ngIf="notifications.length" class="absolute right-0 mt-2 w-64 bg-white text-black shadow-lg rounded">
+        <div *ngFor="let n of notifications" class="p-2 border-b text-sm">
+          {{ n.message }}
+        </div>
+      </div>
+    </div>
+
     <div class="hidden md:block">
       <button class="btn-cancel" (click)="logout()">Logout</button>
     </div>

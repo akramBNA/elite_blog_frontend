@@ -3,8 +3,9 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UsersService } from '../../services/users.services';
 import { SwalService } from '../../shared/Swal/swal.service'
-// import { RouterOutlet } from "../../../node_modules/@angular/router/router_module.d-Bx9ArA6K";
 import { CheckRolesService } from '../../services/checkRoles.services';
+import { NotificationService } from '../../services/notifications.services';
+
 
 @Component({
   selector: 'app-main-page',
@@ -16,13 +17,32 @@ import { CheckRolesService } from '../../services/checkRoles.services';
 export class MainPageComponent {
   isMenuOpen = false;
   currentYear = new Date().getFullYear();
+  notifications: any[] = [];
 
   constructor(
     private userService: UsersService,
     private swalService: SwalService,
     public checkRoleService: CheckRolesService,
+    private notificationService: NotificationService,
     private router: Router
   ) {}
+
+  ngOnInit() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const userId = JSON.parse(user)._id;
+      this.notificationService.connect(userId);
+      this.notificationService.notifications$.subscribe(
+        (notifications) => (this.notifications = notifications)
+      );
+      console.log("notification: ", this.notifications);
+      
+    }
+  }
+
+  ngOnDestroy() {
+    this.notificationService.disconnect();
+  }
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
