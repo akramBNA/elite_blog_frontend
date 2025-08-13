@@ -43,24 +43,19 @@ export class EditPostComponent {
 
     this.isLoading = true;
 
-    // Prepare tags as array
     const updatedPost = {
       ...this.postForm.value,
       tags: this.postForm.value.tags
         ? this.postForm.value.tags.split(',').map((t: string) => t.trim())
         : []
     };
-
-    console.log("--- updatePost: ", updatedPost);
     
     this.postsService.updatePost(this.data.post._id, updatedPost).subscribe({
       next: (res: any) => {
-        console.log("response: ", res);
-        
         this.isLoading = false;
         if (res.success) {
           this.swalService.showSuccess('Post updated successfully!');
-          this.dialogRef.close(res.data); // return updated post
+          this.dialogRef.close(res.data);
         } else {
           this.swalService.showError('Failed to update post, try again!');
         }
